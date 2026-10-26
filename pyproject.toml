@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aurora"
+version = "0.1.0"
+description = "Aurora: asistente personal que ejecuta trabajos reales en tu PC"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-settings>=2.4",
+    "websockets>=13",
+    "python-docx>=1.1",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+servidor = [
+    "anthropic>=2.3",
+    "python-telegram-bot>=21",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+]
+dev = [
+    "aurora[servidor]",
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+]
+
+[project.scripts]
+aurora-servidor = "aurora.server.main:main"
+aurora-agente = "aurora.agent.main:main"
+
+[tool.setuptools.packages.find]
+include = ["aurora*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
